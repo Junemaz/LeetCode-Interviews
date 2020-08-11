@@ -1,0 +1,32 @@
+class Solution {
+public:
+    vector<int> mutes;
+    vector<vector<int>> permuteUnique(vector<int>& nums) {
+        vector<vector<int>> res;
+        vector<int> visited(nums.size(), 0);
+        sort(nums.begin(), nums.end());
+        permuteUnique(nums, res, visited);
+        return res;
+
+    }
+
+    void permuteUnique(vector<int>& nums, vector<vector<int>>& res, vector<int>& visited) {
+        int length = nums.size();
+        if(mutes.size() == length) {
+            res.push_back(mutes);
+            return;
+        }
+        for(int i = 0; i < length; ++i) {
+            if(visited[i] == 1) continue;
+            if(i > 0 && nums[i] == nums[i-1] && !visited[i-1]) {
+                continue;
+            }
+            mutes.push_back(nums[i]);
+            visited[i] = 1;
+            permuteUnique(nums, res, visited);
+            visited[i] = 0;
+            mutes.pop_back();
+        }
+        return;
+    }
+};
